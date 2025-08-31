@@ -1,0 +1,192 @@
+/* This is a style sheet in CSS */
+
+html, body {
+    background-color: rgb(235, 235, 235);
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #fff;
+    margin: 0;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    margin-left: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #222;
+}
+
+.username {
+    margin-right: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #222;
+}
+
+.inspirational-quote {
+    font-style: italic;
+    color: #222;
+    text-align: center;
+    margin: 15px 0px;
+    font-size: 1.2em;
+}
+
+.input-section {
+    background-color: #fff;
+    margin-top: 10px;
+    margin-left: 320px;
+    margin-right: 320px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px; /* Rounded corners */
+}
+
+.input-header {
+    background-color: #ff1313c5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 24px; /* 12px top/bottom, 24px left/right */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.input-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.input-form {
+    display: flex;
+    justify-content: space-between;
+    padding: 32px;
+}
+
+.input-form label {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #222;
+    margin-right: 10px;
+}
+
+.input-form-left {
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+    gap: 40px;
+    flex: 1 1 50%;
+    max-width: 50%;
+}
+
+.input-form-right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1 1 50%;
+    max-width: 50%;
+}
+
+.input-form-right textarea {
+    width: 100%;
+    resize: vertical; /* Allow vertical resizing only */
+    padding: 4px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.entry-button {
+    background-color: #ff1313c5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.entry-button:hover {
+    background-color: #e01111;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.entry-button-row {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.entries-section {
+    margin-left: 120px;
+    margin-right: 120px;
+    padding: 20px;
+}
+
+.entries-section h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #222;
+    text-align: center;
+}
+
+.entry {
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden; /* Ensures header's border-radius matches entry */
+}
+
+.entry:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.entry-header {
+    background-color: #ff13135b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px; /* 12px top/bottom, 24px left/right */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.entry-content {
+    display: flex;
+    padding: 15px 20px; /* 15px top/bottom, 20px left/right */
+    gap: 15px; /* Space between image and text */
+}
+
+.entry-image {
+    max-width: 200px;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.entry-mood-container {
+    display: flex;
+    gap: 20px;
+}
+
+.entry-mood {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    font-size: 1em;
+    color: #222;
+    font-weight: bold;
+}
