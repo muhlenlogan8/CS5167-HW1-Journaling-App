@@ -4,33 +4,32 @@
 // User entries array with existing entries data
 const entries = [
     {
-
+        image: "assets/entry2.jpg",
+        datetime: "Today's Entry",
+        sleep: 0,
+        moods: [],
+        text: ""
+    },
+    {
         image: "assets/entry1.jpg",
         datetime: "08/30/2025 11:31 pm",
         sleep: 9,
-        moods: ["happy"],
+        moods: ["Happy"],
         text: "Today was a good day!"
     },
     {
         image: "assets/entry2.jpg",
         datetime: "08/28/2025 9:02 am",
         sleep: 4,
-        moods: ["tired", "happy"],
+        moods: ["Tired", "Happy"],
         text: "Very tired today this morning but I'm happy and hopeful for today"
     },
     {
         image: "assets/entry2.jpg",
         datetime: "08/24/2025 1:42 pm",
         sleep: 7,
-        moods: ["sad"],
+        moods: ["Sad"],
         text: "Today hasn't been great so far."
-    },
-    {
-        image: "assets/entry2.jpg",
-        datetime: "08/17/2025 1:42 pm",
-        sleep: 11,
-        moods: ["happy"],
-        text: "I slept so much today this is awesome!"
     }
 ];
 
@@ -41,31 +40,42 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSummary();
     sleepInputListener();
     moodCheckboxListener();
+    entryTextListener();
 });
 
-// If the sleep input changes, update the summary to reflect this
+// If the sleep input changes, update today's entry
 function sleepInputListener() {
     const sleepInput = document.getElementById("sleep-hours");
-    sleepInput.addEventListener("input", () => {
-        console.log("Sleep input changed:", sleepInput.value);
-    });
+    sleepInput.addEventListener("input", updateTodayEntry);
 }
 
-// If the mood checkboxes change, update the summary to reflect this
+// If the mood checkboxes change, update today's entry
 function moodCheckboxListener() {
     const moodCheckboxes = document.querySelectorAll('input[name="mood"]');
-    // Add an eventListener for each checkbox so we detect if any one of them changes
     moodCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener("change", () => {
-            const checkedMoods = Array.from(moodCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.value);
-            console.log("Mood checkbox changed. Checked moods:", checkedMoods);
-        });
+        checkbox.addEventListener("change", updateTodayEntry);
     });
 }
 
-// Summary Function //
+// If the entry text input changes, update today's entry
+function entryTextListener() {
+    const entryText = document.getElementById("entry-text");
+    entryText.addEventListener("input", updateTodayEntry);
+}
+
+// Functions //
+// Update the entry for today
+function updateTodayEntry() {
+    // Update the first entry in the entries data (First entry is today's entry)
+    let entry = entries[0];
+    entry.sleep = Number(document.getElementById("sleep-hours")?.value);
+    entry.moods = Array.from(document.querySelectorAll('input[name="mood"]:checked')).map(cb => cb.value.charAt(0).toUpperCase() + cb.value.slice(1));
+    entry.text = document.getElementById("entry-text")?.value;
+
+    updateSummary();
+    displayEntries();
+}
+
 // Function to calculate the average sleep time and number of moods for entries and current input
 function updateSummary() {
     // Get the average sleep for the entries
@@ -77,45 +87,44 @@ function updateSummary() {
     averageSleep = averageSleep.toFixed(2); // Round to 2 decimal places
 
     // Show average sleep in the summary
-    document.getElementById('summary-avg-sleep').textContent = averageSleep;
+    document.getElementById("summary-avg-sleep").textContent = averageSleep;
 
     // Get mood counts
     let happyCount = 0;
     let sadCount = 0;
     let tiredCount = 0;
     entries.forEach(entry => {
-        if (entry.moods.includes("happy")) happyCount++;
-        if (entry.moods.includes("sad")) sadCount++;
-        if (entry.moods.includes("tired")) tiredCount++;
+        if (entry.moods.includes("Happy")) happyCount++;
+        if (entry.moods.includes("Sad")) sadCount++;
+        if (entry.moods.includes("Tired")) tiredCount++;
     });
 
     // Show mood counts in the summary
-    document.getElementById('summary-happy-count').textContent = happyCount;
-    document.getElementById('summary-sad-count').textContent = sadCount;
-    document.getElementById('summary-tired-count').textContent = tiredCount;
+    document.getElementById("summary-happy-count").textContent = happyCount;
+    document.getElementById("summary-sad-count").textContent = sadCount;
+    document.getElementById("summary-tired-count").textContent = tiredCount;
 }
 
-
-// Render entries logic (Creating html components which will be added inside of a div or section already present in index.html)
+// Render entries logic (Creating html components which will be added inside of entries-list div already present in index.html)
 function displayEntries() {
-    const entriesList = document.querySelector(".entries-list"); // Get the entries list container
-    entriesList.innerHTML = "" // Reinitialize entries html
+    const entriesList = document.querySelector(".entries-list"); // Get the entries list div
+    entriesList.innerHTML = ""
 
     // Set present svgs to use in the rendering of an entry
         const moodSvgs = {
-            happy: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            Happy: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                         <circle cx="12" cy="12" r="10" stroke="#FFD600" stroke-width="2" fill="#FFF9C4"/>
                         <ellipse cx="9" cy="10" rx="1" ry="1.5" fill="#333"/>
                         <ellipse cx="15" cy="10" rx="1" ry="1.5" fill="#333"/>
                         <path d="M9.5 15c1 2 4 2 5 0" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>`,
-            sad:   `<svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            Sad:   `<svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                         <circle cx="12" cy="12" r="10" stroke="#2196F3" stroke-width="2" fill="#E3F2FD"/>
                         <ellipse cx="9" cy="10" rx="1" ry="1.5" fill="#333"/>
                         <ellipse cx="15" cy="10" rx="1" ry="1.5" fill="#333"/>
                         <path d="M9.5 16c1-2 4-2 5 0" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>`,
-            tired: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+            Tired: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none">
                         <circle cx="12" cy="12" r="10" stroke="#90A4AE" stroke-width="2" fill="#ECEFF1"/>
                         <path d="M6 10c1-1 4-1 4 0" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
                         <path d="M13 10c1-1 3-1 4 0" stroke="#333" stroke-width="1.5" stroke-linecap="round"/>
@@ -126,16 +135,16 @@ function displayEntries() {
     // Loop through entries and create html for each
     entries.forEach(entry => {
         // Create mood html
-        let moodHtml = '';
+        let moodHtml = "";
         if (entry.moods.length > 1) {
             moodHtml = `<div class="entry-mood-container">` +
                 entry.moods.map(mood =>
-                    `<span class="entry-mood">${moodSvgs[mood] || ''}${mood.charAt(0).toUpperCase() + mood.slice(1)}</span>`
-                ).join('') +
+                    `<span class="entry-mood">${moodSvgs[mood]}${mood}</span>`
+                ).join("") +
                 `</div>`;
         } else if (entry.moods.length === 1) {
             const mood = entry.moods[0];
-            moodHtml = `<span class="entry-mood">${moodSvgs[mood] || ''}${mood.charAt(0).toUpperCase() + mood.slice(1)}</span>`;
+            moodHtml = `<span class="entry-mood">${moodSvgs[mood]}${mood}</span>`;
         }
 
         // Create html for the image component of the entry
@@ -143,7 +152,7 @@ function displayEntries() {
             ? `<img src="${entry.image}" alt="Entry Image" class="entry-image">`
             : "";
 
-        // Create entry html
+        // Create html for the entry overall
         const entryHtml = `
             <div class="entry">
                 <div class="entry-header">
